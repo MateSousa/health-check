@@ -9,7 +9,6 @@ const props = defineProps({
 
 
 const lastLogReceived = computed(() => {
-    console.log(props.log)
     if (props.log.length === 0) {
         return {
             status: 'Not yet received',
