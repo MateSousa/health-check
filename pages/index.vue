@@ -26,6 +26,7 @@ const logsFromUrl = (url_id: string) => {
 <template>
     <div flex flex-col justify-center items-center>
         <Card v-for="url in urls" :key="url.id" :url="url" :log="logsFromUrl(url.id)" />
+        <h1>only dev branch</h1>
     </div>
 </template>
 
