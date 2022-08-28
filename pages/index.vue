@@ -21,7 +21,6 @@ const logsFromUrl = (url_id: string) => {
     return logs.value?.filter((i) => i.url_id === url_id)
 } 
 
-console.log(urls)
  
 </script>
 <template>
