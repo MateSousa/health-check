@@ -1,32 +1,26 @@
 <script setup lang='ts'>
-import { Url, Log } from '~/utils/interface'
+import SignInForm from '~~/components/molecules/SignInForm.vue'; 
+import SignUpForm from '~~/components/molecules/SignUpForm.vue';
 
-const client = useSupabaseClient()
+const user = useSupabaseUser()
 
-const { data: urls } = await useAsyncData("urls", async () => {
-    const { data, error } = await client.from<Url>("urls").select('*')
-    if (error) throw Error(error.message)
-    return data
+watchEffect(() => {
+    if (user.value) {
+        navigateTo('/urls')
+    }
 })
 
-
-const { data: logs } = await useAsyncData('logs', async () => {
-    const { data, error } = await client.from<Log>('logs').select('*').order("time", { ascending: false})
-    if (error) throw Error(error.message)
-    return data
-})
-
-const logsFromUrl = (url_id: string) => {
-    if(!urls) return []
-    return logs.value?.filter((i) => i.url_id === url_id)
-} 
-
+const haveAccount = ref(true)
  
 </script>
 <template>
-    <div flex flex-col justify-center items-center>
-        <Card v-for="url in urls" :key="url.id" :url="url" :log="logsFromUrl(url.id)" />
-        <h1>only dev branch</h1>
+    <div>
+        <div>
+            <h3>Welcome, please sign in or if you don't have account sign up</h3>
+        </div>
+        <div>
+            <Component :is="haveAccount ? SignInForm : SignUpForm" />
+        </div>
     </div>
 </template>
 
